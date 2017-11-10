@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load custom_markdown %}
+{% block title %}Lionel's Blog{% endblock title %}
+{% block main %}
+    {#display article information    #}
+    {% for post in page.object_list %}
+       <article class="article article-type-post">
+            <div class="article-meta">
+                <a class="article-date">
+                    <time>{{ post.createdTime|date }}</time>
+                </a>
+                <div class="article-category">
+                    <a class="article-category-link" href="/category/{{ post.category.id }}" target="_blank">{{ post.categpry }}</a>
+                </div>
+            </div>
+            <div class="article-inner">
+                <header class="article-header">
+                    <h1 itemprop="name">
+                        <a class="article-title" href="#" target="_blank">{{ post.title }}</a>
+                    </h1>
+                </header>
+                <div class="article-entry" itemprop="articleBody">
+                    <h2>前言</h2>
+                    <hr>
+                    <!--内容-->
+                    <p>{{ post.content|mark|safe|truncatewords:30}}</p>
+                    <p class="article-more-link">
+                        <a href="/post/details/{{ post.id }}" target="_blank">阅读全文</a>
+                    </p>
+                </div>
+                <footer class="article-footer">
+                    <a data-url="存放文章的url" class="article-share-link">分享</a>
+                    <ul class="article-tag-list">
+                        {% for tag in post.tags.all %}
+                            <li class="article-tag-list-item">
+                                <a class="article-tag-list-link" href="/tag/{{ tag.id }}">{{ tag }}</a>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </footer>
+            </div>
+        </article>
+    {% endfor %}
+    {# display page information #}
+    <nav id="page-nav">
+        {% if page.has_previous %}
+            <a class="extend prev" rel="prev" href="/page/{{ page.previous_page_number }}">« Prev</a>
+        {% endif %}
+        {% for pos in page_range %}
+            {% ifequal pos page.number %}
+                <span class="page-number current">{{ pos }}</span>
+            {% else %}
+                <a class="page-number" href="/page/{{ pos }}">{{ pos }}</a>
+            {% endifequal %}
+        {% endfor %}
+
+        {% if page.has_next %}
+            <a class="extend next" rel="next" href="/page/{{ page.next_page_number }}">Next »</a>
+        {% endif %}
+    </nav>
+{% endblock main %}

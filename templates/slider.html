@@ -1,0 +1,61 @@
+<aside id="sidebar">
+     <!--分类-->
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list">
+          {% for cate in category %}
+              <li class="category-list-item">
+                  <a class="category-list-link" href="/category/{{ cate.category }}">{{ cate.category__name }}</a>
+                  <span class="category-list-count">{{ cate.count }}</span>
+              </li>
+          {% endfor %}
+      </ul>
+      </div>
+  </div>
+
+     <!--归档-->
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list">
+          {% regroup archive by createdTime.year as year_group %}
+          {% for year in year_group %}
+              {%  regroup year.list by createdTime.month as month_group %}
+                {% for month in month_group %}
+                    <li class="archive-list-item">
+                        <a class="archive-list-link" href="/archive/{{ year.grouper }}/{{ month.grouper }}">{{ year.grouper }}年{{ month.grouper }}月</a>
+                        <span class="archive-list-count">{{ month.list|length }}</span>
+                    </li>
+                {% endfor %}
+          {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+          {% for post in recent %}
+              <li>
+                <a href="/post/details/{{ post.id }}">{{ post.title }}</a>
+              </li>
+          {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+          <li>
+            <a href="https://www.coursera.org/" target="_blank">coursera</a>
+          </li>
+          <li>
+            <a href="http://web.mit.edu/" target="_blank">MIT</a>
+          </li>
+      </ul>
+    </div>
+  </div>
+</aside>

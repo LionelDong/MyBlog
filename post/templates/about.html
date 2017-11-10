@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load custom_markdown %}
+{% block title %}About me{% endblock title %}
+{% block main %}
+    <article class="article article-type-page">
+        <div class="article-inner">
+            <header class="article-header">
+                <p class="article-title">
+                  About me
+                </p>
+                <br>
+                <hr>
+            </header>
+            <div class="article-entry">
+                <div class="article-entry" itemprop="articleBody">
+                    <!--内容-->
+                    <p>{{ content.desc|mark|safe}}</p>
+                </div>
+            </div>
+        </div>
+</article>
+{% endblock main %}
